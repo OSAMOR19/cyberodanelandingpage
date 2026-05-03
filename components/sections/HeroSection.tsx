@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
+import { IconArrowRight, IconChevronDown } from "@/components/icons/Icons";
 import { hero } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/gsap";
 
@@ -51,64 +52,16 @@ function AnimatedStat({ value, suffix, label, delay }: { value: string; suffix: 
       transition={{ duration: 0.7, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
       className="group relative"
     >
-      <div className="absolute inset-0 rounded-xl bg-teal/[0.04] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-500 group-hover:border-teal/20 group-hover:shadow-glow-sm">
-        <div className="font-display text-4xl font-bold tracking-tight text-mist stat-number lg:text-5xl">
+      <div className="relative rounded-xl border border-line bg-surface-card p-5 backdrop-blur-sm transition-all duration-500 group-hover:border-line-accent group-hover:shadow-glow-sm">
+        <div className="font-display text-4xl font-bold tracking-tight text-ink lg:text-5xl">
           {isNumeric ? count : value}
           <span className="gradient-text">{suffix}</span>
         </div>
-        <div className="mt-2 text-xs font-medium uppercase tracking-[0.15em] text-mist-muted">
+        <div className="mt-2 text-xs font-medium uppercase tracking-[0.15em] text-ink-muted">
           {label}
         </div>
       </div>
     </motion.div>
-  );
-}
-
-/* Floating particles background */
-function CyberParticles() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute h-1 w-1 rounded-full bg-teal/30"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.8, 0.2],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 3,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-      {/* Horizontal data lines */}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={`line-${i}`}
-          className="absolute h-px bg-gradient-to-r from-transparent via-teal/20 to-transparent"
-          style={{
-            top: `${15 + i * 18}%`,
-            width: "100%",
-          }}
-          animate={{ opacity: [0, 0.5, 0], x: ["-100%", "100%"] }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            delay: i * 1.5,
-            ease: "linear",
-          }}
-        />
-      ))}
-    </div>
   );
 }
 
@@ -155,26 +108,23 @@ export function HeroSection() {
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-bg.png"
+          src="/images/hero-soc.png"
           alt=""
           fill
-          className="object-cover opacity-25"
+          className="object-cover"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/80 to-navy" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-transparent to-navy/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-surface/60 via-surface/80 to-surface dark:from-surface/50 dark:via-surface/75 dark:to-surface" />
+        <div className="absolute inset-0 bg-gradient-to-r from-surface via-transparent to-surface/80 dark:from-surface dark:via-transparent dark:to-surface/80" />
       </div>
 
-      {/* Animated grid */}
+      {/* Subtle grid (dark only) */}
       <div className="pointer-events-none absolute inset-0 cyber-grid opacity-40" aria-hidden />
-
-      {/* Particle system */}
-      <CyberParticles />
 
       {/* Ambient glow orbs */}
       <motion.div
-        className="pointer-events-none absolute -right-24 top-[-10%] h-[min(700px,90vw)] w-[min(700px,90vw)] rounded-full bg-teal/[0.06] blur-[120px]"
+        className="pointer-events-none absolute -right-24 top-[-10%] h-[min(700px,90vw)] w-[min(700px,90vw)] rounded-full bg-accent/[0.06] blur-[120px]"
         animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden
@@ -183,12 +133,6 @@ export function HeroSection() {
         className="pointer-events-none absolute -left-32 bottom-[10%] h-[min(500px,70vw)] w-[min(500px,70vw)] rounded-full bg-gold/[0.04] blur-[100px]"
         animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        aria-hidden
-      />
-      <motion.div
-        className="pointer-events-none absolute left-1/3 top-1/4 h-[300px] w-[300px] rounded-full bg-cyber-purple/[0.04] blur-[80px]"
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
         aria-hidden
       />
 
@@ -201,19 +145,19 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal/20 bg-teal/[0.06] px-4 py-2.5 backdrop-blur-md"
+              className="mb-8 inline-flex items-center gap-3 rounded-full border border-accent/20 bg-accent-faint px-4 py-2.5 backdrop-blur-md"
             >
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal opacity-40" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-teal shadow-glow-teal" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent shadow-glow-accent" />
               </span>
-              <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-teal">
+              <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-accent">
                 {hero.kicker}
               </span>
             </motion.div>
 
             {/* Main heading */}
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-mist sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-6xl lg:text-7xl">
               <span ref={line1} className="block">
                 {hero.titleLine1}
               </span>
@@ -224,7 +168,7 @@ export function HeroSection() {
 
             <p
               ref={sub}
-              className="mt-7 max-w-xl text-lg leading-relaxed text-mist-dim sm:text-xl"
+              className="mt-7 max-w-xl text-lg leading-relaxed text-ink-secondary sm:text-xl"
             >
               {hero.sub}
             </p>
@@ -233,22 +177,18 @@ export function HeroSection() {
             <div ref={actions} className="mt-10 flex flex-wrap gap-4">
               <Link
                 href={hero.primaryCta.href}
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-teal px-7 py-3.5 text-sm font-semibold text-navy transition-all duration-300 hover:shadow-glow-teal hover:scale-[1.02]"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-accent px-7 py-3.5 text-sm font-semibold text-accent-contrast transition-all duration-300 hover:shadow-glow-accent hover:scale-[1.02]"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-teal-bright/0 via-white/20 to-teal-bright/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+                <span className="absolute inset-0 bg-gradient-to-r from-accent-bright/0 via-white/20 to-accent-bright/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
                 <span className="relative">{hero.primaryCta.label}</span>
-                <svg className="relative h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <IconArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href={hero.secondaryCta.href}
-                className="group inline-flex items-center gap-2 rounded-lg border border-teal/25 bg-white/[0.03] px-7 py-3.5 text-sm font-medium text-mist backdrop-blur-sm transition-all duration-300 hover:border-teal/50 hover:bg-teal/[0.08] hover:shadow-glow-sm"
+                className="group inline-flex items-center gap-2 rounded-lg border border-line bg-surface-card px-7 py-3.5 text-sm font-medium text-ink backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:bg-accent-faint hover:shadow-glow-sm"
               >
                 {hero.secondaryCta.label}
-                <svg className="h-4 w-4 text-teal transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
+                <IconChevronDown className="h-4 w-4 text-accent transition-transform group-hover:translate-y-0.5" />
               </Link>
             </div>
           </div>
@@ -278,12 +218,12 @@ export function HeroSection() {
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden
       >
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-mist-muted">
+        <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted">
           Scroll to explore
         </span>
-        <div className="relative h-10 w-5 rounded-full border border-teal/30">
+        <div className="relative h-10 w-5 rounded-full border border-accent/30">
           <motion.div
-            className="absolute left-1/2 top-2 h-2 w-1 -translate-x-1/2 rounded-full bg-teal"
+            className="absolute left-1/2 top-2 h-2 w-1 -translate-x-1/2 rounded-full bg-accent"
             animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -291,7 +231,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-navy to-transparent z-[1]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent z-[1]" />
     </section>
   );
 }

@@ -10,13 +10,26 @@ export const site = {
   location: "United Kingdom (Remote & On-Site)",
 } as const;
 
-export const navLinks = [
+export type NavLink = {
+  href: string;
+  label: string;
+  children?: readonly { href: string; label: string; desc: string }[];
+};
+
+export const navLinks: readonly NavLink[] = [
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
-  { href: "#research", label: "Research" },
-  { href: "#publications", label: "Publications" },
-  { href: "#grants", label: "Grants" },
-  { href: "#insights", label: "Insights" },
+  {
+    href: "/research",
+    label: "Research & Output",
+    children: [
+      { href: "/research#themes", label: "Research Themes", desc: "Six defining areas of active cybersecurity research" },
+      { href: "/research#publications", label: "Publications", desc: "Peer-reviewed journal articles and conference papers" },
+      { href: "/research#grants", label: "Grants & Funding", desc: "Active and target grant programmes" },
+      { href: "/research#odane-guard", label: "Odane Guard", desc: "Flagship AI-powered phishing detection system" },
+    ],
+  },
+  { href: "/insights", label: "Insights" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -511,17 +524,17 @@ export const footer = {
         { href: "#about", label: "About Cyberodane" },
         { href: "#team", label: "Research team" },
         { href: "#partnerships", label: "Partnership model" },
-        { href: "#grants", label: "Grants & funding" },
+        { href: "/research#grants", label: "Grants & funding" },
         { href: "#contact", label: "Fellowship applications" },
       ],
     },
     {
       title: "Research",
       links: [
-        { href: "#research", label: "Research themes" },
-        { href: "#publications", label: "Publications" },
-        { href: "#research", label: "Odane Guard" },
-        { href: "#insights", label: "Research insights" },
+        { href: "/research#themes", label: "Research themes" },
+        { href: "/research#publications", label: "Publications" },
+        { href: "/research#odane-guard", label: "Odane Guard" },
+        { href: "/insights", label: "Research insights" },
         { href: "#contact", label: "Collaborate" },
       ],
     },

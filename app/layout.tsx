@@ -4,6 +4,7 @@ import { Cormorant_Garamond, DM_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 import { site } from "@/lib/content";
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -67,8 +68,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${cormorant.variable} ${dmMono.variable}`}>
-      <body className="min-h-screen font-sans text-mist overflow-x-hidden">{children}</body>
+    <html lang="en" className={`${dmSans.variable} ${cormorant.variable} ${dmMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Prevent FOUC - set dark class before paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const t = localStorage.getItem('cyberodane-theme');
+                if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch(e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen font-sans text-ink overflow-x-hidden bg-surface transition-colors duration-300">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
