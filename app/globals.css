@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --border: rgba(245, 247, 250, 0.08);
+  --border-accent: rgba(0, 201, 167, 0.25);
+  --teal-pale: rgba(0, 201, 167, 0.12);
+  --teal-glow: rgba(0, 201, 167, 0.06);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-navy text-mist antialiased;
+}
+
+::selection {
+  @apply bg-teal/30 text-mist;
+}
+
+:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-teal;
+}

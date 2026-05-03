@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cyberodane | Cybersecurity Research Consultancy Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0A0E1A;
+    --navy-mid: #111827;
+    --navy-light: #1E2A40;
+    --slate: #2D3A52;
+    --teal: #00C9A7;
+    --teal-dim: #009E84;
+    --teal-pale: rgba(0,201,167,0.12);
+    --teal-glow: rgba(0,201,167,0.06);
+    --gold: #C9A84C;
+    --gold-pale: rgba(201,168,76,0.12);
+    --white: #F5F7FA;
+    --white-dim: rgba(245,247,250,0.75);
+    --white-muted: rgba(245,247,250,0.45);
+    --white-ghost: rgba(245,247,250,0.08);
+    --border: rgba(245,247,250,0.08);
+    --border-accent: rgba(0,201,167,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.2; }
+  h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); letter-spacing: -0.02em; }
+  h2 { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.01em; }
+  h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+  h4 { font-size: 1.1rem; }
+  p { font-size: 1rem; color: var(--white-dim); }
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { color: #fff; }
+
+  .mono { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 1rem; }
+  
+  /* ─── LAYOUT ─── */
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 7rem 0; }
+  section:nth-child(even) { background: var(--navy-mid); }
+
+  /* ─── GRID DIVIDER ─── */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,247,250,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,247,250,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1280px; margin: 0 auto; padding: 1.1rem 2rem;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.87rem; color: var(--white-muted); letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--teal); color: var(--navy); padding: 0.6rem 1.4rem;
+    border-radius: 2px; font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.04em; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; color: var(--navy); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; padding-top: 6rem;
+    background: var(--navy); overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(0,201,167,0.08); top: -10%; right: -5%; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(201,168,76,0.05); bottom: 10%; left: -8%; }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    border: 1px solid var(--border-accent);
+    padding: 0.4rem 1rem; border-radius: 2px;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.16em; color: var(--teal); margin-bottom: 2rem;
+  }
+  .hero-kicker::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero-title { margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--teal); }
+  .hero-sub { font-size: 1.15rem; max-width: 640px; margin-bottom: 3rem; color: var(--white-dim); }
+  .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 5rem; }
+  .btn-primary {
+    background: var(--teal); color: var(--navy); padding: 0.9rem 2rem;
+    border-radius: 2px; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { opacity: 0.88; color: var(--navy); }
+  .btn-outline {
+    border: 1px solid var(--border-accent); color: var(--white); padding: 0.9rem 2rem;
+    border-radius: 2px; font-size: 0.9rem; letter-spacing: 0.04em; transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--teal); background: var(--teal-pale); color: var(--white); }
+  .hero-stats { display: flex; gap: 3.5rem; flex-wrap: wrap; }
+  .stat-item { }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: var(--white); line-height: 1; }
+  .stat-num span { color: var(--teal); }
+  .stat-label { font-size: 0.82rem; color: var(--white-muted); letter-spacing: 0.05em; margin-top: 0.3rem; }
+  .hero-scroll { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--teal), transparent); animation: scroll-anim 2s ease-in-out infinite; }
+  @keyframes scroll-anim { 0%,100%{opacity:0.3;transform:scaleY(0.5)}50%{opacity:1;transform:scaleY(1)} }
+
+  /* ─── ABOUT ─── */
+  #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-left { }
+  .about-right { padding-top: 2rem; }
+  .about-right p { margin-bottom: 1.3rem; }
+  .pillar-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .pillar {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem 1.5rem; border: 1px solid var(--border);
+    border-left: 3px solid var(--teal); background: var(--white-ghost); border-radius: 2px;
+  }
+  .pillar-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--teal); min-width: 2rem; padding-top: 0.15rem; }
+  .pillar-text h4 { color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .pillar-text p { font-size: 0.87rem; margin: 0; }
+  .vision-block {
+    margin-top: 3rem; padding: 2rem;
+    border: 1px solid var(--border-accent); background: var(--teal-glow);
+    border-radius: 2px; position: relative;
+  }
+  .vision-block blockquote {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+    font-style: italic; line-height: 1.5; color: var(--white);
+  }
+  .vision-block cite { display: block; margin-top: 1rem; font-size: 0.82rem; color: var(--teal); letter-spacing: 0.06em; font-style: normal; }
+
+  /* ─── SERVICES ─── */
+  #services { position: relative; overflow: hidden; }
+  .services-header { margin-bottom: 4rem; max-width: 640px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
+  .service-card {
+    background: var(--navy-mid); padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--teal); transform: scaleX(0);
+    transition: transform 0.3s; transform-origin: left;
+  }
+  .service-card:hover { background: var(--navy-light); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 2px;
+    background: var(--teal-pale); border: 1px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .service-icon svg { width: 22px; height: 22px; stroke: var(--teal); fill: none; stroke-width: 1.5; }
+  .service-card h3 { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.7rem; letter-spacing: 0.01em; }
+  .service-card p { font-size: 0.87rem; line-height: 1.65; }
+  .service-tag {
+    display: inline-block; margin-top: 1.2rem;
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.12em; color: var(--gold); padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(201,168,76,0.25); border-radius: 2px;
+  }
+
+  /* ─── RESEARCH ─── */
+  #research { background: var(--navy); }
+  .research-intro { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; margin-bottom: 5rem; align-items: start; }
+  .research-themes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .theme-card {
+    padding: 2rem; border: 1px solid var(--border);
+    background: var(--white-ghost); border-radius: 2px;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+  }
+  .theme-card:hover { border-color: var(--border-accent); background: var(--teal-glow); }
+  .theme-id { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--white-muted); letter-spacing: 0.12em; margin-bottom: 1rem; }
+  .theme-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.97rem; color: var(--white); margin-bottom: 0.6rem; }
+  .theme-card p { font-size: 0.85rem; }
+  .theme-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.2rem 0.5rem; border: 1px solid var(--border); color: var(--white-muted); border-radius: 2px; }
+
+  /* ─── PUBLICATIONS ─── */
+  #publications { position: relative; }
+  .pub-filter { display: flex; gap: 0.6rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .pub-filter button {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+    padding: 0.45rem 1rem; border-radius: 2px; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--white-muted);
+    transition: all 0.2s;
+  }
+  .pub-filter button.active, .pub-filter button:hover { background: var(--teal-pale); border-color: var(--border-accent); color: var(--teal); }
+  .pub-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+  .pub-entry {
+    padding: 2rem 2rem; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: start;
+    transition: background 0.2s;
+  }
+  .pub-entry:last-child { border-bottom: none; }
+  .pub-entry:hover { background: var(--white-ghost); }
+  .pub-year { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--teal); letter-spacing: 0.1em; min-width: 2.5rem; padding-top: 0.2rem; }
+  .pub-body h4 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.97rem; color: var(--white); margin-bottom: 0.4rem; line-height: 1.4; }
+  .pub-meta { font-size: 0.82rem; color: var(--white-muted); }
+  .pub-meta span { color: var(--gold); }
+  .pub-badge {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em;
+    padding: 0.25rem 0.55rem; border-radius: 2px; white-space: nowrap; align-self: flex-start;
+    margin-top: 0.2rem;
+  }
+  .badge-q1 { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .badge-ieee { background: rgba(55,138,221,0.12); color: #6DB3EE; border: 1px solid rgba(55,138,221,0.25); }
+  .badge-springer { background: rgba(212,83,126,0.12); color: #E88EB2; border: 1px solid rgba(212,83,126,0.25); }
+
+  /* ─── PARTNERSHIPS ─── */
+  #partnerships { background: var(--navy-mid); }
+  .partner-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 5rem; align-items: center; }
+  .partner-model {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .partner-step {
+    padding: 1.8rem; border: 1px solid var(--border); background: var(--white-ghost);
+    border-radius: 2px; position: relative;
+  }
+  .partner-step-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 3rem;
+    font-weight: 700; color: var(--white-ghost); line-height: 1;
+    margin-bottom: 1rem; display: block;
+  }
+  .partner-step h4 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.92rem; color: var(--white); margin-bottom: 0.4rem; }
+  .partner-step p { font-size: 0.83rem; }
+  .partner-logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+  .partner-logo-card {
+    height: 80px; border: 1px solid var(--border); background: var(--white-ghost);
+    display: flex; align-items: center; justify-content: center; border-radius: 2px;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--white-muted); letter-spacing: 0.1em;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .partner-logo-card:hover { border-color: var(--border-accent); background: var(--teal-glow); color: var(--teal); }
+
+  /* ─── GRANTS ─── */
+  #grants { background: var(--navy); }
+  .grants-lead { max-width: 680px; margin-bottom: 4rem; }
+  .grants-lead p { font-size: 1.08rem; margin-bottom: 1rem; }
+  .grant-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); }
+  .grant-table th {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--white-muted); text-align: left;
+    padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--white-ghost);
+  }
+  .grant-table td { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: top; }
+  .grant-table tr:last-child td { border-bottom: none; }
+  .grant-table tr:hover td { background: var(--white-ghost); }
+  .grant-name { color: var(--white); font-weight: 500; }
+  .grant-funder { color: var(--teal); font-size: 0.82rem; }
+  .grant-desc { color: var(--white-muted); font-size: 0.85rem; }
+  .status-active { color: var(--teal); font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; }
+  .status-seeking { color: var(--gold); font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; }
+  .status-completed { color: var(--white-muted); font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; }
+  .grant-cta-box {
+    margin-top: 3rem; padding: 3rem;
+    border: 1px solid var(--border-accent); background: var(--teal-glow);
+    display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+    border-radius: 2px;
+  }
+  .grant-cta-box h3 { font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; }
+  .grant-cta-box p { font-size: 0.9rem; }
+
+  /* ─── TEAM ─── */
+  #team { background: var(--navy-mid); }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; }
+  .team-card {
+    border: 1px solid var(--border); background: var(--white-ghost);
+    padding: 2rem; border-radius: 2px; transition: border-color 0.3s;
+  }
+  .team-card:hover { border-color: var(--border-accent); }
+  .team-avatar {
+    width: 56px; height: 56px; border-radius: 2px;
+    background: var(--teal-pale); border: 1px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+    font-weight: 700; color: var(--teal); margin-bottom: 1.2rem;
+  }
+  .team-card h3 { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.2rem; }
+  .team-role { font-size: 0.82rem; color: var(--teal); margin-bottom: 0.8rem; }
+  .team-bio { font-size: 0.85rem; margin-bottom: 1.2rem; }
+  .team-creds { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .cred { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.2rem 0.5rem; border: 1px solid var(--border); color: var(--white-muted); border-radius: 2px; }
+
+  /* ─── INSIGHTS ─── */
+  #insights { background: var(--navy); }
+  .insights-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .insight-card {
+    border: 1px solid var(--border); background: var(--white-ghost);
+    border-radius: 2px; overflow: hidden; display: flex; flex-direction: column;
+    transition: border-color 0.3s;
+  }
+  .insight-card:hover { border-color: var(--border-accent); }
+  .insight-img {
+    height: 200px; background: var(--navy-light); display: flex;
+    align-items: center; justify-content: center; overflow: hidden;
+    position: relative;
+  }
+  .insight-img-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .insight-img svg { opacity: 0.15; }
+  .insight-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+  .insight-cat { font-family: 'DM Mono', monospace; font-size: 0.67rem; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 0.8rem; }
+  .insight-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.97rem; color: var(--white); margin-bottom: 0.6rem; line-height: 1.4; }
+  .insight-card p { font-size: 0.85rem; flex: 1; }
+  .insight-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .insight-date { font-size: 0.78rem; color: var(--white-muted); }
+  .insight-link { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--teal); }
+  .insight-card.featured .insight-img { height: 280px; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--navy-mid); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
+  .contact-left h2 { margin-bottom: 1.2rem; }
+  .contact-left p { margin-bottom: 2rem; font-size: 1.05rem; }
+  .contact-channels { display: flex; flex-direction: column; gap: 1rem; margin-top: 2.5rem; }
+  .channel {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.2rem 1.5rem; border: 1px solid var(--border);
+    background: var(--white-ghost); border-radius: 2px;
+  }
+  .channel-icon { width: 36px; height: 36px; background: var(--teal-pale); border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+  .channel-icon svg { width: 16px; height: 16px; stroke: var(--teal); fill: none; stroke-width: 1.5; }
+  .channel-label { font-size: 0.8rem; color: var(--white-muted); }
+  .channel-value { font-size: 0.92rem; color: var(--white); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-field label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--white-muted); }
+  .form-field input, .form-field select, .form-field textarea {
+    background: var(--white-ghost); border: 1px solid var(--border);
+    color: var(--white); padding: 0.85rem 1rem; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.92rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--border-accent); }
+  .form-field textarea { height: 120px; resize: vertical; }
+  .form-field select option { background: var(--navy-mid); }
+  .form-submit { background: var(--teal); color: var(--navy); padding: 1rem 2rem; border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500; cursor: pointer; letter-spacing: 0.04em; transition: opacity 0.2s; }
+  .form-submit:hover { opacity: 0.88; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #070A14; border-top: 1px solid var(--border);
+    padding: 4rem 0 2rem;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; max-width: 280px; }
+  .footer-col h4 { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em; color: var(--teal); text-transform: uppercase; margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul a { font-size: 0.87rem; color: var(--white-muted); transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .footer-bottom p { font-size: 0.82rem; color: var(--white-muted); }
+  .footer-affiliations { display: flex; gap: 1.5rem; }
+  .affil { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--white-muted); }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header { margin-bottom: 3.5rem; }
+  .section-header h2 { margin-bottom: 1rem; }
+  .section-header p { max-width: 580px; font-size: 1.05rem; }
+  .section-header.centered { text-align: center; }
+  .section-header.centered p { margin: 0 auto; }
+
+  /* ─── DIVIDER ─── */
+  .h-line { height: 1px; background: var(--border); margin: 0; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    #about .about-grid, .research-intro, .partner-intro, .contact-grid, .partner-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid, .research-themes, .team-grid { grid-template-columns: 1fr 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .partner-logos, .grants-grid { grid-template-columns: 1fr 1fr; }
+    .partner-model { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .services-grid, .research-themes, .team-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+  }
+
+  /* animations */
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Cyber<span>odane</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#grants">Grants</a></li>
+      <li><a href="#insights">Insights</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Partner With Us</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="container">
+    <div class="hero-content fade-up visible">
+      <div class="hero-kicker">CYBERSECURITY RESEARCH &amp; CONSULTANCY INSTITUTE</div>
+      <h1 class="hero-title">
+        Where Rigorous Research<br><em>Shapes Cyber Defence</em>
+      </h1>
+      <p class="hero-sub">
+        Cyberodane bridges the frontier between academic cybersecurity scholarship and real-world industry application — winning grants, engineering solutions, and publishing findings that define the discipline.
+      </p>
+      <div class="hero-actions">
+        <a href="#partnerships" class="btn-primary">Explore Partnerships</a>
+        <a href="#research" class="btn-outline">Our Research Areas</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">12<span>+</span></div>
+          <div class="stat-label">Peer-reviewed Publications</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">8<span>+</span></div>
+          <div class="stat-label">Industry Collaborations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Q1<span>/Q2</span></div>
+          <div class="stat-label">Journal Target Classification</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">6<span>+</span></div>
+          <div class="stat-label">Active Research Themes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left fade-up">
+        <span class="section-label">Who We Are</span>
+        <h2>A Research Institute at the Intersection of Academia and Industry</h2>
+
+        <div class="vision-block" style="margin-top:2.5rem;">
+          <blockquote>
+            "We do not merely study threats — we build the intellectual frameworks and deployable defences that neutralise them."
+          </blockquote>
+          <cite>— Cyberodane Research Philosophy</cite>
+        </div>
+
+        <div class="pillar-list">
+          <div class="pillar">
+            <span class="pillar-num">01</span>
+            <div class="pillar-text">
+              <h4>Research-First Ethos</h4>
+              <p>Every engagement is grounded in empirical evidence, reproducible methodology, and rigorous peer-review standards.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">02</span>
+            <div class="pillar-text">
+              <h4>Industry-Integrated Scholarship</h4>
+              <p>We embed industry partners as co-investigators, ensuring research problems are real and outputs are deployable.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">03</span>
+            <div class="pillar-text">
+              <h4>Grant-Driven Sustainability</h4>
+              <p>We identify, bid for, and manage competitive research funding from national and international bodies to sustain long-term programmes.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">04</span>
+            <div class="pillar-text">
+              <h4>Open Science Commitment</h4>
+              <p>Findings are disseminated through Q1 journals, open-access repositories, and conference proceedings for maximum societal impact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right fade-up">
+        <span class="section-label">Our Mission &amp; Origin</span>
+        <h3 style="margin-bottom:1.5rem;">Founded to Close the Gap Between Research and Real-World Cyber Defence</h3>
+        <p>Cyberodane was established in response to a persistent and dangerous gap in the cybersecurity landscape: organisations face evolving, sophisticated threats while the academic community produces increasingly advanced knowledge that rarely reaches operational teams in time or form to be useful.</p>
+        <p>Our mandate is to serve as the connective tissue between these two worlds. We operate as a specialist research consultancy with the credibility of an academic institute and the pragmatism of an industry partner — co-creating knowledge, co-developing tools, and co-authoring publications that carry weight in both boardrooms and journals.</p>
+        <p>Anchored in the United Kingdom and collaborating internationally, Cyberodane brings together practitioner-researchers — cybersecurity professionals who are simultaneously active academics — to conduct research programmes that are measurably relevant and publication-ready.</p>
+
+        <div style="margin-top:2.5rem;display:flex;flex-direction:column;gap:0.8rem;">
+          <div style="display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--white-ghost);border-radius:2px;">
+            <span class="mono" style="white-space:nowrap;">AFFILIATED</span>
+            <span style="font-size:0.87rem;color:var(--white-dim);">University of the West of England, Bristol — Senior Lectureship in Cybersecurity &amp; Digital Forensics</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--white-ghost);border-radius:2px;">
+            <span class="mono" style="white-space:nowrap;">DOCTORAL</span>
+            <span style="font-size:0.87rem;color:var(--white-dim);">Glasgow Caledonian University — Active DPhil: ML-based Phishing Email Detection Systems</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--white-ghost);border-radius:2px;">
+            <span class="mono" style="white-space:nowrap;">CERTIFIED</span>
+            <span style="font-size:0.87rem;color:var(--white-dim);">CISSP · CEH · VP Cybersecurity Operations, Barclays Bank</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="services" style="background:var(--navy-mid);">
+  <div class="container">
+    <div class="services-header fade-up">
+      <span class="section-label">What We Do</span>
+      <h2>End-to-End Research &amp; Consultancy Services</h2>
+      <p>From identifying grant opportunities to publishing in elite journals, Cyberodane manages the full lifecycle of applied cybersecurity research — in partnership with your organisation.</p>
+    </div>
+    <div class="services-grid fade-up">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Industry Research Partnerships</h3>
+        <p>We co-design research programmes with industry organisations, acting as your embedded academic partner. We define the research question, ethics framework, methodology, and dissemination plan — while your organisation provides domain access, operational data, and co-investigator status for grant applications.</p>
+        <span class="service-tag">CORE OFFERING</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Grant Bid Consultancy</h3>
+        <p>Securing competitive research funding is a discipline in itself. Cyberodane identifies suitable funding calls — including EPSRC, Innovate UK, EU Horizon Europe, NCSC, and DSTL grants — and leads the writing, costing, and submission of full research proposals. We increase your organisation's probability of success substantially.</p>
+        <span class="service-tag">STRATEGIC</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Cybersecurity R&amp;D Advisory</h3>
+        <p>We advise CISOs, product managers, and innovation leads on how to embed research rigour into product development cycles. This includes threat modelling grounded in academic literature, evaluation frameworks for ML-based security tooling, and structured knowledge transfer from recent research to engineering teams.</p>
+        <span class="service-tag">ADVISORY</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Publication &amp; Dissemination Support</h3>
+        <p>We produce peer-review-ready manuscripts for Q1 and Q2 indexed journals including IEEE Transactions, Springer Nature, Elsevier, and ACM Digital Library. We manage the full submission lifecycle: manuscript preparation, reviewer response, revision, and final publication. We also support conference paper preparation for leading venues such as IEEE S&amp;P and USENIX Security.</p>
+        <span class="service-tag">PUBLICATION</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Threat Intelligence Research</h3>
+        <p>Cyberodane conducts primary research into advanced persistent threats, ransomware ecosystems (CL0P, Black Basta, LockBit), phishing infrastructure, dark web monitoring, and ML-based detection systems. Outputs include intelligence reports, MITRE ATT&amp;CK-aligned analyses, and detection artefacts including trained models and datasets.</p>
+        <span class="service-tag">RESEARCH</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Training &amp; Capacity Building</h3>
+        <p>We design and deliver research-informed CPD programmes for cybersecurity practitioners, executive briefings for board-level audiences, and bespoke technical upskilling workshops. Our content is anchored in the latest academic findings and translated for operational relevance — not standard compliance training.</p>
+        <span class="service-tag">EDUCATION</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RESEARCH ═══════════════ -->
+<section id="research">
+  <div class="container">
+    <div class="research-intro">
+      <div class="fade-up">
+        <span class="section-label">Active Research</span>
+        <h2>Six Defining Research Themes</h2>
+        <p style="margin-bottom:1.5rem;">Cyberodane's research agenda is structured around six interconnected themes that collectively span the threat lifecycle — from detection and attribution to policy and resilience.</p>
+        <p>Each theme is driven by active projects, industry engagement, and an explicit publication trajectory targeting high-impact journals.</p>
+        <div style="margin-top:2.5rem;padding:1.5rem 2rem;border:1px solid var(--border-accent);background:var(--teal-glow);border-radius:2px;">
+          <p style="font-size:0.85rem;color:var(--white-dim);margin-bottom:0.5rem;">Current publication target</p>
+          <p style="font-size:1.1rem;font-family:'Cormorant Garamond',serif;color:var(--white);">IEEE Transactions on Information Forensics and Security · Springer Discover Networks · Computers &amp; Security (Elsevier)</p>
+        </div>
+      </div>
+      <div class="research-themes fade-up">
+        <div class="theme-card">
+          <div class="theme-id">THEME // 01</div>
+          <h3>ML-Augmented Threat Detection</h3>
+          <p>Development and comparative evaluation of machine learning models — XGBoost, Random Forest, Decision Trees, and Logistic Regression — for phishing, intrusion, and malware detection at scale.</p>
+          <div class="theme-tags"><span class="tag">XGBoost</span><span class="tag">NLP</span><span class="tag">Phishing</span><span class="tag">IDS</span></div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-id">THEME // 02</div>
+          <h3>Ransomware Ecosystem Analysis</h3>
+          <p>In-depth technical and operational analysis of ransomware groups including CL0P, Black Basta, and LockBit, encompassing attack vectors, TTPs, encryption mechanisms, and defensive countermeasures.</p>
+          <div class="theme-tags"><span class="tag">CL0P</span><span class="tag">Black Basta</span><span class="tag">MITRE</span><span class="tag">CTI</span></div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-id">THEME // 03</div>
+          <h3>Digital Forensics &amp; Incident Investigation</h3>
+          <p>Research into forensic artefact recovery, evidence chain management, post-breach timeline reconstruction, and the deployment of forensic toolkits in cloud-hybrid environments.</p>
+          <div class="theme-tags"><span class="tag">Forensics</span><span class="tag">Cloud</span><span class="tag">Chain of Custody</span></div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-id">THEME // 04</div>
+          <h3>Mobile &amp; IoT Security in Developing Economies</h3>
+          <p>Research into mobile cybersecurity threats and IoT cryptographic weaknesses in Sub-Saharan Africa and other emerging digital markets, identifying region-specific risk profiles and mitigation strategies.</p>
+          <div class="theme-tags"><span class="tag">West Africa</span><span class="tag">IoT</span><span class="tag">AES</span><span class="tag">Mobile</span></div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-id">THEME // 05</div>
+          <h3>Graph Neural Networks for Threat Intelligence</h3>
+          <p>Novel application of GNN architectures to malicious IP detection, threat actor attribution, and knowledge graph construction for cyber threat intelligence enrichment.</p>
+          <div class="theme-tags"><span class="tag">GNN</span><span class="tag">Threat Intel</span><span class="tag">Attribution</span></div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-id">THEME // 06</div>
+          <h3>Multi-Source Intelligence Frameworks</h3>
+          <p>Design and empirical validation of structured intelligence frameworks — including the Cyberodane Multi-Source Intelligence Framework (MSIF) — for integrating OSINT, dark web, HUMINT, and telemetry data into unified analytical pipelines.</p>
+          <div class="theme-tags"><span class="tag">OSINT</span><span class="tag">MSIF</span><span class="tag">HUMINT</span><span class="tag">Dark Web</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Odane Guard -->
+    <div style="border:1px solid var(--border);border-left:3px solid var(--teal);background:var(--white-ghost);padding:2.5rem 3rem;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="fade-up">
+      <div>
+        <span class="section-label">Flagship Product</span>
+        <h3 style="margin-bottom:1rem;">Odane Guard — AI-Powered Phishing Detection System</h3>
+        <p style="margin-bottom:1rem;">Developed as part of our doctoral research programme, Odane Guard is a production-grade phishing email detection system trained on a corpus of approximately 49,000 emails. The system leverages an XGBoost classification model achieving 96.8% detection accuracy with sub-100ms inference latency.</p>
+        <p>Odane Guard is now the centrepiece of a broader research-to-product pipeline — demonstrating Cyberodane's capacity to take academic findings through prototype to deployable enterprise tooling.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.8rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--navy);border-radius:2px;">
+          <span style="font-size:0.85rem;color:var(--white-muted);">Detection Accuracy</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--teal);">96.8%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--navy);border-radius:2px;">
+          <span style="font-size:0.85rem;color:var(--white-muted);">Training Dataset</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--white);">~49K emails</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--navy);border-radius:2px;">
+          <span style="font-size:0.85rem;color:var(--white-muted);">Primary Model</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.9rem;color:var(--white);">XGBoost · RF · DT · LR</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border:1px solid var(--border);background:var(--navy);border-radius:2px;">
+          <span style="font-size:0.85rem;color:var(--white-muted);">Status</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--teal);letter-spacing:0.1em;">PRODUCTION-GRADE PROTOTYPE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PUBLICATIONS ═══════════════ -->
+<section id="publications" style="background:var(--navy-mid);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Scholarly Output</span>
+      <h2>Selected Publications &amp; Research Output</h2>
+      <p>Cyberodane targets publication in the highest-ranked cybersecurity and information security journals, ensuring maximum reach and academic impact.</p>
+    </div>
+
+    <div class="pub-list fade-up">
+
+      <div class="pub-entry">
+        <span class="pub-year">2025</span>
+        <div class="pub-body">
+          <h4>Multi-Source Intelligence Framework (MSIF) for Advanced Ransomware Attribution: A Case Study of Black Basta</h4>
+          <p class="pub-meta">Jude Osamor et al. · <span>Springer — Discover Networks</span> · DOI: 10.1007/s44244-XXX</p>
+        </div>
+        <span class="pub-badge badge-springer">SPRINGER Q1</span>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-year">2025</span>
+        <div class="pub-body">
+          <h4>CL0P Ransomware: Detection Strategies, Mitigation Frameworks, and Threat Actor Profiling Using MITRE ATT&amp;CK</h4>
+          <p class="pub-meta">Jude Osamor et al. · <span>IEEE Transactions on Information Forensics and Security</span> · Under Review</p>
+        </div>
+        <span class="pub-badge badge-ieee">IEEE</span>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-year">2024</span>
+        <div class="pub-body">
+          <h4>Comparative Evaluation of Machine Learning Classifiers for Phishing Email Detection: XGBoost, Random Forest, Decision Tree, and Logistic Regression on a 49K-Sample Corpus</h4>
+          <p class="pub-meta">Jude Osamor · <span>Doctoral Thesis Chapter — Glasgow Caledonian University</span> · Academic Year 2024–25</p>
+        </div>
+        <span class="pub-badge badge-q1">DOCTORAL</span>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-year">2024</span>
+        <div class="pub-body">
+          <h4>Mobile Cybersecurity Threat Landscape in West Africa: Empirical Analysis and a Regional Risk Framework</h4>
+          <p class="pub-meta">Jude Osamor et al. · <span>Computers &amp; Security — Elsevier</span> · Target Submission Q3 2025</p>
+        </div>
+        <span class="pub-badge badge-q1">ELSEVIER Q1</span>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-year">2024</span>
+        <div class="pub-body">
+          <h4>Port of Nagoya Ransomware Incident: Post-Breach Forensic Analysis and Critical Infrastructure Protection Implications</h4>
+          <p class="pub-meta">Jude Osamor et al. · <span>Journal of Cybersecurity and Information Management</span> · Published</p>
+        </div>
+        <span class="pub-badge badge-q1">PUBLISHED</span>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-year">2023</span>
+        <div class="pub-body">
+          <h4>Graph Neural Networks for Malicious IP Detection: A Scalable Threat Attribution Approach for Enterprise Networks</h4>
+          <p class="pub-meta">Jude Osamor et al. · <span>IEEE Access</span> · In Preparation</p>
+        </div>
+        <span class="pub-badge badge-ieee">IEEE ACCESS</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;" class="fade-up">
+      <a href="#contact" class="btn-outline" style="font-size:0.85rem;padding:0.7rem 1.5rem;">Request Full Publication List</a>
+      <a href="#contact" class="btn-outline" style="font-size:0.85rem;padding:0.7rem 1.5rem;">Collaborate on a Manuscript</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PARTNERSHIPS ═══════════════ -->
+<section id="partnerships">
+  <div class="container">
+    <div class="partner-intro">
+      <div class="fade-up">
+        <span class="section-label">Collaboration Model</span>
+        <h2>How We Partner With Industry</h2>
+        <p style="margin-bottom:1.2rem;">Cyberodane operates a structured four-stage partnership model that transforms an industry problem statement into a peer-reviewed research output — with your organisation named as co-investigator and beneficiary.</p>
+        <p>This is not traditional consultancy. It is a collaborative research programme where your organisation's intellectual investment yields grant funding, academic credibility, publishable findings, and deployable products simultaneously.</p>
+        <div style="margin-top:2.5rem;">
+          <a href="#contact" class="btn-primary" style="display:inline-block;">Initiate a Partnership Discussion</a>
+        </div>
+      </div>
+      <div class="partner-model fade-up">
+        <div class="partner-step">
+          <span class="partner-step-num">01</span>
+          <h4>Problem Discovery</h4>
+          <p>Joint scoping workshop to define the research question, articulate the industry need, and assess grant alignment.</p>
+        </div>
+        <div class="partner-step">
+          <span class="partner-step-num">02</span>
+          <h4>Grant Identification &amp; Bidding</h4>
+          <p>Cyberodane leads the grant application with your organisation as named co-applicant, covering costs and timelines.</p>
+        </div>
+        <div class="partner-step">
+          <span class="partner-step-num">03</span>
+          <h4>Research Execution</h4>
+          <p>Rigorous data collection, experimentation, modelling, and validation under an agreed ethics and IP framework.</p>
+        </div>
+        <div class="partner-step">
+          <span class="partner-step-num">04</span>
+          <h4>Publication &amp; Deployment</h4>
+          <p>Q1 journal submission, conference presentation, and delivery of deployable artefacts, tools, or policy recommendations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-line"></div>
+
+    <div style="margin-top:4rem;" class="fade-up">
+      <span class="section-label">Partnership Sectors</span>
+      <h3 style="margin-bottom:2rem;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--white);">We welcome partners across the following sectors</h3>
+      <div class="partner-logos">
+        <div class="partner-logo-card">FINANCIAL SERVICES</div>
+        <div class="partner-logo-card">CRITICAL INFRASTRUCTURE</div>
+        <div class="partner-logo-card">HEALTHCARE &amp; NHS</div>
+        <div class="partner-logo-card">GOVERNMENT &amp; DEFENCE</div>
+        <div class="partner-logo-card">HIGHER EDUCATION</div>
+        <div class="partner-logo-card">TECHNOLOGY VENDORS</div>
+        <div class="partner-logo-card">LEGAL &amp; PROFESSIONAL SERVICES</div>
+        <div class="partner-logo-card">LOGISTICS &amp; SUPPLY CHAIN</div>
+        <div class="partner-logo-card">TELCO &amp; MEDIA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ GRANTS ═══════════════ -->
+<section id="grants">
+  <div class="container">
+    <div class="grants-lead fade-up">
+      <span class="section-label">Funding &amp; Grants</span>
+      <h2>Research Funding Strategy</h2>
+      <p>Cyberodane has a dedicated grant intelligence function that monitors funding landscapes across the UK, Europe, and internationally. We actively pursue funding from EPSRC, Innovate UK, EU Horizon Europe, DSTL, NCSC, and charitable research foundations. Our track record in grant writing positions us as a credible lead applicant or co-investigator on competitive bids.</p>
+    </div>
+
+    <table class="grant-table fade-up">
+      <thead>
+        <tr>
+          <th>Programme</th>
+          <th>Funder</th>
+          <th>Research Focus</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="grant-name">AI Economy Research Grant</div><div class="grant-funder">Microsoft AI Economy Institute</div></td>
+          <td style="color:var(--white-dim);font-size:0.87rem;">Microsoft</td>
+          <td class="grant-desc">AI-cybersecurity skills gap in technical college education for working professionals</td>
+          <td><span class="status-active">● SUBMITTED</span></td>
+        </tr>
+        <tr>
+          <td><div class="grant-name">Cyber Resilience for Critical Infrastructure</div><div class="grant-funder">EPSRC — New Horizons</div></td>
+          <td style="color:var(--white-dim);font-size:0.87rem;">EPSRC / UKRI</td>
+          <td class="grant-desc">Automated detection and response frameworks for CNI ransomware attacks using ML and SOAR</td>
+          <td><span class="status-seeking">● TARGETING 2025</span></td>
+        </tr>
+        <tr>
+          <td><div class="grant-name">Innovate UK Cyber Catalyst</div><div class="grant-funder">Innovate UK</div></td>
+          <td style="color:var(--white-dim);font-size:0.87rem;">Innovate UK</td>
+          <td class="grant-desc">Product development funding for Odane Guard enterprise phishing detection deployment</td>
+          <td><span class="status-seeking">● IN DEVELOPMENT</span></td>
+        </tr>
+        <tr>
+          <td><div class="grant-name">Horizon Europe — Secure AI</div><div class="grant-funder">European Research Executive Agency</div></td>
+          <td style="color:var(--white-dim);font-size:0.87rem;">EU Horizon</td>
+          <td class="grant-desc">Trustworthy and explainable AI for cybersecurity threat detection in federated network environments</td>
+          <td><span class="status-seeking">● MONITORING</span></td>
+        </tr>
+        <tr>
+          <td><div class="grant-name">NCSC Academic Starter Grant</div><div class="grant-funder">National Cyber Security Centre</div></td>
+          <td style="color:var(--white-dim);font-size:0.87rem;">NCSC / GCHQ</div></td>
+          <td class="grant-desc">Dark web intelligence collection methodologies and automated threat actor profiling</td>
+          <td><span class="status-seeking">● TARGETING 2026</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grant-cta-box fade-up">
+      <div>
+        <h3>Co-Apply for Research Funding With Us</h3>
+        <p>Your organisation's participation as a named industry partner significantly strengthens grant applications to EPSRC, Innovate UK, and EU Horizon. We handle the writing, budgeting, and submission — you contribute domain access and co-investigator status.</p>
+      </div>
+      <a href="#contact" class="btn-primary" style="white-space:nowrap;">Discuss Co-Application</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TEAM ═══════════════ -->
+<section id="team" style="background:var(--navy-mid);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Leadership &amp; Research Team</span>
+      <h2>Practitioner-Researchers Leading the Institute</h2>
+      <p>Cyberodane is led by cybersecurity professionals who are simultaneously active academics, practitioners, and published researchers — bringing dual-domain credibility to every engagement.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-avatar">JO</div>
+        <h3>Dr. Jude Osamor</h3>
+        <div class="team-role">Founder &amp; Principal Research Director</div>
+        <p class="team-bio">VP of Cybersecurity Operations at Barclays Bank and Senior Lecturer at the University of the West of England, Bristol. Active DPhil candidate at Glasgow Caledonian University researching ML-based phishing detection. Co-founder of CyBlack, a community-focused cybersecurity initiative. Author of peer-reviewed publications on ransomware, threat intelligence, and ML-driven security.</p>
+        <div class="team-creds">
+          <span class="cred">CISSP</span>
+          <span class="cred">CEH</span>
+          <span class="cred">DPhil (Cand.)</span>
+          <span class="cred">Senior Lecturer</span>
+          <span class="cred">Barclays VP</span>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-avatar">RI</div>
+        <h3>Research &amp; Industry Fellows</h3>
+        <div class="team-role">Visiting Researchers &amp; Practitioners</div>
+        <p class="team-bio">Cyberodane maintains a network of visiting research fellows drawn from UK universities, financial institutions, and government cybersecurity bodies. Fellows contribute domain expertise, peer-review capacity, and co-authorship to active research programmes, ensuring both breadth and depth across our six research themes.</p>
+        <div class="team-creds">
+          <span class="cred">IEEE Members</span>
+          <span class="cred">CREST Registered</span>
+          <span class="cred">Doctoral Supervisors</span>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-avatar">AC</div>
+        <h3>Academic Collaborators</h3>
+        <div class="team-role">University Research Partners</div>
+        <p class="team-bio">Through existing academic affiliations at UWE Bristol and Glasgow Caledonian University, Cyberodane maintains structured research collaboration agreements with faculty members in cybersecurity, computer science, information systems, and AI. These relationships enable joint grant applications and access to institutional research infrastructure including datasets, labs, and ethics boards.</p>
+        <div class="team-creds">
+          <span class="cred">UWE Bristol</span>
+          <span class="cred">Glasgow Caledonian</span>
+          <span class="cred">Multi-University</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;padding:2rem 2.5rem;border:1px solid var(--border);background:var(--white-ghost);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;border-radius:2px;" class="fade-up">
+      <div>
+        <h4 style="font-family:'DM Sans',sans-serif;font-weight:500;color:var(--white);margin-bottom:0.3rem;">Join Our Research Network</h4>
+        <p style="font-size:0.87rem;">We invite academics, doctoral candidates, and cybersecurity practitioners to affiliate with Cyberodane as Research Fellows or Associate Researchers.</p>
+      </div>
+      <a href="#contact" class="btn-outline" style="font-size:0.85rem;padding:0.7rem 1.5rem;white-space:nowrap;">Apply for Fellowship</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ INSIGHTS ═══════════════ -->
+<section id="insights">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Research Intelligence</span>
+      <h2>Insights, Commentary &amp; Analysis</h2>
+      <p>Perspectives from the Cyberodane research team on the evolving threat landscape, emerging academic findings, and policy implications for practitioners and decision-makers.</p>
+    </div>
+
+    <div class="insights-grid fade-up">
+
+      <div class="insight-card featured">
+        <div class="insight-img" style="background:linear-gradient(135deg,#0a1a14 0%,#0d2238 100%);">
+          <div class="insight-img-inner">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="#00C9A7" stroke-width="0.8">
+              <circle cx="60" cy="60" r="50"/>
+              <circle cx="60" cy="60" r="35"/>
+              <circle cx="60" cy="60" r="20"/>
+              <line x1="10" y1="60" x2="110" y2="60"/>
+              <line x1="60" y1="10" x2="60" y2="110"/>
+              <line x1="25" y1="25" x2="95" y2="95"/>
+              <line x1="95" y1="25" x2="25" y2="95"/>
+            </svg>
+          </div>
+        </div>
+        <div class="insight-body">
+          <div class="insight-cat">THREAT LANDSCAPE</div>
+          <h3>The CL0P Playbook: How Ransomware Groups Are Industrialising Extortion at Scale</h3>
+          <p>A deep technical breakdown of CL0P's operational evolution — from MOVEit exploitation to quadruple extortion strategies — and what defenders must do differently in 2025 to disrupt their kill chain at each stage.</p>
+          <div class="insight-footer">
+            <span class="insight-date">March 2025</span>
+            <a href="#" class="insight-link">READ →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-img" style="height:140px;background:linear-gradient(135deg,#0f1a2a 0%,#1a0f2a 100%);">
+          <div class="insight-img-inner">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.4">
+              <rect x="10" y="10" width="60" height="60" rx="2"/>
+              <rect x="20" y="20" width="40" height="40" rx="2"/>
+              <rect x="30" y="30" width="20" height="20" rx="2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="insight-body">
+          <div class="insight-cat">MACHINE LEARNING</div>
+          <h3>Why XGBoost Outperforms Neural Networks for Phishing Detection in Production</h3>
+          <p>An honest analysis of where gradient boosting methods retain an advantage over deep learning when inference latency, interpretability, and dataset size matter in enterprise email security.</p>
+          <div class="insight-footer">
+            <span class="insight-date">February 2025</span>
+            <a href="#" class="insight-link">READ →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-img" style="height:140px;background:linear-gradient(135deg,#1a0a0a 0%,#2a1010 100%);">
+          <div class="insight-img-inner">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#E88EB2" stroke-width="0.8" opacity="0.4">
+              <path d="M40 5 L70 25 L70 55 L40 75 L10 55 L10 25 Z"/>
+              <path d="M40 20 L57 30 L57 50 L40 60 L23 50 L23 30 Z"/>
+              <circle cx="40" cy="40" r="8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="insight-body">
+          <div class="insight-cat">POLICY &amp; REGULATION</div>
+          <h3>NIS2 Directive: What UK Financial Institutions Must Address Before Enforcement Bites</h3>
+          <p>A practitioner's guide to mapping NIS2 obligations against existing ISO 27001 and DORA compliance programmes — identifying the gaps most organisations will overlook.</p>
+          <div class="insight-footer">
+            <span class="insight-date">January 2025</span>
+            <a href="#" class="insight-link">READ →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-img" style="height:140px;background:linear-gradient(135deg,#0a1520 0%,#0a2010 100%);">
+          <div class="insight-img-inner">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#5DCAA5" stroke-width="0.8" opacity="0.4">
+              <circle cx="20" cy="20" r="10"/>
+              <circle cx="60" cy="20" r="10"/>
+              <circle cx="40" cy="60" r="10"/>
+              <line x1="28" y1="25" x2="52" y2="25"/>
+              <line x1="25" y1="28" x2="38" y2="52"/>
+              <line x1="55" y1="28" x2="42" y2="52"/>
+            </svg>
+          </div>
+        </div>
+        <div class="insight-body">
+          <div class="insight-cat">RESEARCH METHODS</div>
+          <h3>Graph Neural Networks for Threat Attribution: Promise, Pitfalls, and a Practical Evaluation Framework</h3>
+          <p>An accessible introduction to GNN architectures for malicious IP detection, reviewing key papers and outlining evaluation criteria for practitioners considering deployment.</p>
+          <div class="insight-footer">
+            <span class="insight-date">December 2024</span>
+            <a href="#" class="insight-link">READ →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-img" style="height:140px;background:linear-gradient(135deg,#1a1a0a 0%,#2a200a 100%);">
+          <div class="insight-img-inner">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#FAC775" stroke-width="0.8" opacity="0.4">
+              <rect x="5" y="5" width="30" height="30"/>
+              <rect x="45" y="5" width="30" height="30"/>
+              <rect x="5" y="45" width="30" height="30"/>
+              <rect x="45" y="45" width="30" height="30"/>
+              <line x1="35" y1="20" x2="45" y2="20"/>
+              <line x1="20" y1="35" x2="20" y2="45"/>
+              <line x1="35" y1="60" x2="45" y2="60"/>
+              <line x1="60" y1="35" x2="60" y2="45"/>
+            </svg>
+          </div>
+        </div>
+        <div class="insight-body">
+          <div class="insight-cat">DEVELOPING ECONOMIES</div>
+          <h3>West Africa's Mobile Cybersecurity Deficit: Why Standard Frameworks Fail and What Replaces Them</h3>
+          <p>Drawing on our primary research, we outline the distinct threat profile facing mobile users across Sub-Saharan Africa and propose a regionally-adapted security framework for telcos and regulators.</p>
+          <div class="insight-footer">
+            <span class="insight-date">November 2024</span>
+            <a href="#" class="insight-link">READ →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:3rem;" class="fade-up">
+      <a href="#" class="btn-outline">View All Research Insights</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contact" style="background:var(--navy-mid);">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left fade-up">
+        <span class="section-label">Get In Touch</span>
+        <h2>Start a Research Partnership</h2>
+        <p>Whether you are an organisation seeking to embed research into your cybersecurity strategy, an academic institution exploring collaboration, or a funder considering a research portfolio — we welcome the conversation.</p>
+
+        <div class="contact-channels">
+          <div class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="channel-label">Research Enquiries</div>
+              <div class="channel-value">research@cyberodane.ac.uk</div>
+            </div>
+          </div>
+          <div class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="channel-label">Institute Location</div>
+              <div class="channel-value">United Kingdom (Remote &amp; On-Site)</div>
+            </div>
+          </div>
+          <div class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="channel-label">Academic &amp; LinkedIn</div>
+              <div class="channel-value">linkedin.com/company/cyberodane</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border);background:var(--white-ghost);border-radius:2px;">
+          <p style="font-size:0.85rem;color:var(--white-dim);margin-bottom:0;"><strong style="color:var(--teal);">Response commitment:</strong> All partnership and research enquiries receive a substantive response from our research team within 5 working days. Grant co-application discussions are scheduled within 10 working days.</p>
+        </div>
+      </div>
+
+      <div class="contact-form fade-up">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Jane" />
+          </div>
+          <div class="form-field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Organisation</label>
+          <input type="text" placeholder="Your institution or company" />
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane.smith@organisation.co.uk" />
+        </div>
+        <div class="form-field">
+          <label>Nature of Enquiry</label>
+          <select>
+            <option value="">Select enquiry type</option>
+            <option>Research Partnership</option>
+            <option>Grant Co-Application</option>
+            <option>Publication Collaboration</option>
+            <option>R&amp;D Advisory</option>
+            <option>Training &amp; Capacity Building</option>
+            <option>Research Fellowship</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <textarea placeholder="Briefly describe the research challenge or collaboration opportunity you have in mind — the more context you can provide, the more useful our initial response will be."></textarea>
+        </div>
+        <button class="form-submit">Send Enquiry →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Cyber<span style="color:var(--teal);">odane</span></a>
+        <p>A specialist cybersecurity research consultancy institute. We bridge academic scholarship and industry application through grant-funded, publication-driven research partnerships.</p>
+        <div style="margin-top:1.5rem;display:flex;gap:0.6rem;flex-wrap:wrap;">
+          <span class="affil">IEEE</span>
+          <span class="affil">·</span>
+          <span class="affil">EPSRC</span>
+          <span class="affil">·</span>
+          <span class="affil">UWE Bristol</span>
+          <span class="affil">·</span>
+          <span class="affil">GCU</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Institute</h4>
+        <ul>
+          <li><a href="#about">About Cyberodane</a></li>
+          <li><a href="#team">Research Team</a></li>
+          <li><a href="#partnerships">Partnership Model</a></li>
+          <li><a href="#grants">Grants &amp; Funding</a></li>
+          <li><a href="#contact">Fellowship Applications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Research</h4>
+        <ul>
+          <li><a href="#research">Research Themes</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#research">Odane Guard</a></li>
+          <li><a href="#insights">Research Insights</a></li>
+          <li><a href="#contact">Collaborate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Industry Partnerships</a></li>
+          <li><a href="#services">Grant Bid Consultancy</a></li>
+          <li><a href="#services">R&amp;D Advisory</a></li>
+          <li><a href="#services">Publication Support</a></li>
+          <li><a href="#services">Training &amp; CPD</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cyberodane Research Consultancy Institute. All rights reserved.</p>
+      <p style="font-size:0.78rem;">Privacy Policy · Terms of Engagement · Research Ethics Statement</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
