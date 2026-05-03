@@ -1,15 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealStagger } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { howItWorks } from "@/lib/content";
 
+const stepIcons = ["🔍", "📋", "⚗️", "🚀"];
+
 export function HowItWorks() {
   return (
-    <section id="partnerships" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="partnerships" className="relative scroll-mt-24 py-24 sm:py-32 overflow-hidden">
+      <div className="gradient-divider absolute top-0 left-0 right-0" />
+      <div className="absolute inset-0 bg-glow-radial opacity-30" aria-hidden />
+
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <SectionHeader
               label={howItWorks.label}
@@ -26,29 +34,41 @@ export function HowItWorks() {
             />
             <Link
               href={howItWorks.cta.href}
-              className="mt-8 inline-flex rounded-sm bg-teal px-5 py-2.5 text-sm font-medium text-navy transition hover:opacity-90"
+              className="mt-10 inline-flex items-center gap-2 rounded-lg bg-teal px-6 py-3 text-sm font-semibold text-navy transition-all duration-300 hover:shadow-glow-teal hover:scale-[1.02]"
             >
               {howItWorks.cta.label}
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
           </Reveal>
 
           <RevealStagger className="relative">
+            {/* Vertical line */}
             <div
-              className="absolute left-4 top-6 hidden h-[calc(100%-2rem)] w-px bg-gradient-to-b from-teal/50 via-white/10 to-transparent md:block"
+              className="absolute left-6 top-6 hidden h-[calc(100%-2.5rem)] w-px md:block"
               aria-hidden
-            />
-            <ol className="space-6 md:space-8">
-              {howItWorks.steps.map((step) => (
+            >
+              <div className="h-full w-full bg-gradient-to-b from-teal/50 via-teal/20 to-transparent" />
+            </div>
+
+            <ol className="flex flex-col gap-6 md:gap-8">
+              {howItWorks.steps.map((step, i) => (
                 <li
                   key={step.n}
                   data-reveal-item
-                  className="relative flex gap-4 rounded-sm border border-white/[0.08] bg-mist-ghost/40 p-5 backdrop-blur-md md:ml-6 md:pl-8"
+                  className="group relative flex gap-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 backdrop-blur-md transition-all duration-500 hover:border-teal/20 hover:bg-white/[0.04] hover:shadow-glow-sm md:ml-8 md:pl-8"
                 >
-                  <span className="font-mono text-sm text-teal md:absolute md:-left-[1.85rem] md:top-5 md:flex md:h-8 md:w-8 md:items-center md:justify-center md:rounded-full md:border md:border-teal/40 md:bg-navy">
-                    {step.n}
+                  {/* Step number node */}
+                  <span className="shrink-0 font-mono text-sm text-teal md:absolute md:-left-[2rem] md:top-6 md:flex md:h-10 md:w-10 md:items-center md:justify-center md:rounded-full md:border md:border-teal/30 md:bg-navy md:text-base md:shadow-glow-sm">
+                    <span className="md:hidden">{stepIcons[i]}</span>
+                    <span className="hidden md:inline">{step.n}</span>
                   </span>
                   <div>
-                    <h3 className="font-sans text-base font-medium text-mist">{step.title}</h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg md:hidden">{step.n}</span>
+                      <h3 className="font-sans text-base font-semibold text-mist">{step.title}</h3>
+                    </div>
                     <p className="mt-2 text-sm leading-relaxed text-mist-dim">{step.body}</p>
                   </div>
                 </li>

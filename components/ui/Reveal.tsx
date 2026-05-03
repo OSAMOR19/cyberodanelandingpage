@@ -14,7 +14,7 @@ export function Reveal({
   children,
   className = "",
   delay = 0,
-  y = 36,
+  y = 40,
 }: {
   children: ReactNode;
   className?: string;
@@ -37,8 +37,8 @@ export function Reveal({
         {
           opacity: 1,
           y: 0,
-          duration: 0.85,
-          ease: "power3.out",
+          duration: 1,
+          ease: "expo.out",
           delay,
           scrollTrigger: {
             trigger: el,
@@ -61,8 +61,8 @@ export function Reveal({
 export function RevealStagger({
   children,
   className = "",
-  stagger = 0.08,
-  y = 28,
+  stagger = 0.1,
+  y = 32,
 }: {
   children: ReactNode;
   className?: string;
@@ -87,9 +87,9 @@ export function RevealStagger({
         {
           opacity: 1,
           y: 0,
-          duration: 0.75,
+          duration: 0.9,
           stagger,
-          ease: "power3.out",
+          ease: "expo.out",
           scrollTrigger: {
             trigger: root,
             start: "top 85%",

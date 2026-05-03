@@ -1,52 +1,85 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealStagger } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { insights } from "@/lib/content";
 
+const catIcons: Record<string, string> = {
+  "Threat landscape": "⚠️",
+  "Machine learning": "🤖",
+  "Policy & regulation": "📜",
+  "Research methods": "🔬",
+  "Developing economies": "🌍",
+};
+
 export function InsightsSection() {
   return (
-    <section id="insights" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="insights" className="relative scroll-mt-24 py-24 sm:py-32 overflow-hidden">
+      <div className="gradient-divider absolute top-0 left-0 right-0" />
+      <div className="absolute inset-0 bg-glow-radial opacity-30" aria-hidden />
+
       <Container>
         <Reveal>
           <SectionHeader label={insights.label} title={insights.title} description={insights.intro} />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-12">
+        <div className="mt-14 grid gap-6 lg:grid-cols-12">
           {insights.items.map((item, index) => {
             const isFeatured = item.featured && index === 0;
             return (
               <Reveal
                 key={item.title}
                 className={isFeatured ? "lg:col-span-12" : "lg:col-span-6"}
-                delay={index * 0.03}
+                delay={index * 0.04}
               >
                 <article
-                  className={`group flex h-full flex-col overflow-hidden rounded-sm border border-white/[0.08] bg-navy-mid/50 backdrop-blur-md transition hover:border-teal/25 hover:shadow-glow sm:flex-row ${isFeatured ? "" : ""}`}
+                  className={`cyber-card group flex h-full flex-col overflow-hidden sm:flex-row ${
+                    isFeatured ? "sm:min-h-[260px]" : ""
+                  }`}
                 >
+                  {/* Gradient visual area */}
                   <div
-                    className={`relative flex min-h-[160px] items-center justify-center bg-gradient-to-br ${item.gradient} sm:w-2/5 ${isFeatured ? "sm:min-h-[200px] lg:w-1/3" : ""}`}
+                    className={`relative flex min-h-[140px] items-center justify-center bg-gradient-to-br ${item.gradient} sm:w-2/5 ${
+                      isFeatured ? "sm:min-h-[200px] lg:w-1/3" : ""
+                    }`}
                   >
-                    <div className="opacity-40 transition group-hover:opacity-70" aria-hidden>
-                      <div className="h-24 w-24 rounded-full border border-teal/40" />
+                    {/* Decorative elements */}
+                    <div className="absolute inset-0 cyber-grid opacity-20" aria-hidden />
+                    <div className="relative flex flex-col items-center gap-3">
+                      <span className="text-3xl opacity-60 transition group-hover:opacity-100 group-hover:scale-110">
+                        {catIcons[item.cat] || "📊"}
+                      </span>
+                      <div className="opacity-30 transition group-hover:opacity-60" aria-hidden>
+                        <div className="h-16 w-16 rounded-full border border-teal/30 animate-pulse-ring" />
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-1 flex-col p-5 sm:p-6">
-                    <span className="font-mono text-[0.65rem] uppercase tracking-[0.15em] text-gold">
-                      {item.cat}
-                    </span>
-                    <h3 className="mt-2 font-display text-lg font-semibold text-mist sm:text-xl">
+
+                  {/* Content area */}
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[0.63rem] font-bold uppercase tracking-[0.15em] text-gold">
+                        {item.cat}
+                      </span>
+                    </div>
+                    <h3 className="mt-3 font-display text-lg font-bold text-mist transition group-hover:text-teal sm:text-xl">
                       {item.title}
                     </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-mist-dim">{item.body}</p>
-                    <div className="mt-4 flex items-center justify-between gap-4">
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-mist-dim">{item.body}</p>
+                    <div className="mt-5 flex items-center justify-between gap-4 border-t border-white/[0.06] pt-4">
                       <span className="font-mono text-xs text-mist-muted">{item.date}</span>
                       <Link
                         href="#contact"
-                        className="font-mono text-xs uppercase tracking-wider text-teal transition hover:text-mist"
+                        className="group/link inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-teal transition hover:text-mist"
                       >
-                        Read →
+                        Read
+                        <svg className="h-3 w-3 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
                       </Link>
                     </div>
                   </div>
@@ -56,12 +89,15 @@ export function InsightsSection() {
           })}
         </div>
 
-        <Reveal className="mt-10 text-center">
+        <Reveal className="mt-12 text-center">
           <Link
             href={insights.viewAll.href}
-            className="inline-flex rounded-sm border border-[var(--border-accent)] px-5 py-2.5 text-sm text-mist transition hover:border-teal hover:bg-teal/[0.08]"
+            className="group inline-flex items-center gap-2 rounded-lg border border-teal/20 bg-white/[0.02] px-6 py-3 text-sm font-medium text-mist transition-all duration-300 hover:border-teal/40 hover:bg-teal/[0.08] hover:shadow-glow-sm"
           >
             {insights.viewAll.label}
+            <svg className="h-4 w-4 text-teal transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
         </Reveal>
       </Container>

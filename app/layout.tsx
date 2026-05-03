@@ -68,7 +68,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable} ${cormorant.variable} ${dmMono.variable}`}>
-      <body className="min-h-screen font-sans text-mist">{children}</body>
+      <body className="min-h-screen font-sans text-mist overflow-x-hidden">{children}</body>
     </html>
   );
 }

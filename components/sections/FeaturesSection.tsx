@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
   IconAdvisory,
   IconGrant,
@@ -21,16 +24,31 @@ const iconMap = {
   training: IconTraining,
 } as const;
 
-function tagClass(tag: ServiceTag) {
-  if (tag === "CORE OFFERING") return "border-teal/30 text-teal";
-  if (tag === "STRATEGIC" || tag === "ADVISORY") return "border-gold/30 text-gold";
-  return "border-white/15 text-mist-muted";
-}
+const tagColors: Record<ServiceTag, string> = {
+  "CORE OFFERING": "border-teal/30 bg-teal/10 text-teal",
+  STRATEGIC: "border-gold/30 bg-gold/10 text-gold",
+  ADVISORY: "border-gold/30 bg-gold/10 text-gold",
+  PUBLICATION: "border-cyber-blue/30 bg-cyber-blue/10 text-blue-300",
+  RESEARCH: "border-teal/30 bg-teal/10 text-teal",
+  EDUCATION: "border-cyber-purple/30 bg-cyber-purple/10 text-purple-300",
+};
+
+const iconGradients = [
+  "from-teal/20 to-teal/5",
+  "from-gold/20 to-gold/5",
+  "from-gold/20 to-gold/5",
+  "from-blue-400/20 to-blue-400/5",
+  "from-teal/20 to-teal/5",
+  "from-purple-400/20 to-purple-400/5",
+];
 
 export function FeaturesSection() {
   return (
-    <section id="services" className="scroll-mt-24 bg-navy-mid py-20 sm:py-28">
-      <Container>
+    <section id="services" className="relative scroll-mt-24 py-24 sm:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-cyber-gradient" />
+      <div className="gradient-divider absolute top-0 left-0 right-0" />
+
+      <Container className="relative">
         <Reveal>
           <SectionHeader
             label="What we do"
@@ -39,26 +57,37 @@ export function FeaturesSection() {
           />
         </Reveal>
 
-        <RevealStagger className="mt-12 grid gap-px border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 xl:grid-cols-3">
-          {services.map((s) => {
+        <RevealStagger className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {services.map((s, i) => {
             const Icon = iconMap[s.icon];
             return (
               <article
                 key={s.title}
                 data-reveal-item
-                className="group relative overflow-hidden bg-navy-mid p-6 transition-colors hover:bg-navy-light sm:p-8"
+                className="cyber-card group relative p-6 sm:p-7"
               >
-                <span
-                  className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-teal transition-transform duration-300 group-hover:scale-x-100"
+                {/* Hover gradient accent */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-teal/[0.03] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   aria-hidden
                 />
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-sm border border-[var(--border-accent)] bg-teal/[0.12] text-teal transition group-hover:shadow-glow-sm">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <h3 className="text-base font-medium text-mist">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-mist-dim">{s.body}</p>
+
+                {/* Animated bottom line */}
                 <span
-                  className={`mt-4 inline-block rounded-sm border px-2 py-1 font-mono text-[0.65rem] uppercase tracking-wider ${tagClass(s.tag)}`}
+                  className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-gradient-to-r from-teal via-teal-bright to-teal transition-transform duration-500 group-hover:scale-x-100"
+                  aria-hidden
+                />
+
+                {/* Icon */}
+                <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${iconGradients[i]} text-teal ring-1 ring-white/[0.08] transition-all duration-300 group-hover:ring-teal/20 group-hover:shadow-glow-sm`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+
+                <h3 className="text-base font-semibold text-mist">{s.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-mist-dim">{s.body}</p>
+
+                <span
+                  className={`mt-5 inline-flex items-center rounded-lg border px-3 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-wider ${tagColors[s.tag]}`}
                 >
                   {s.tag}
                 </span>

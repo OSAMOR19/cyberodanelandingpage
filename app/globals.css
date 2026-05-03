@@ -7,6 +7,7 @@
   --border-accent: rgba(0, 201, 167, 0.25);
   --teal-pale: rgba(0, 201, 167, 0.12);
   --teal-glow: rgba(0, 201, 167, 0.06);
+  --cyan-accent: #00e5ff;
 }
 
 html {
@@ -29,4 +30,166 @@ body {
 
 :focus-visible {
   @apply outline outline-2 outline-offset-2 outline-teal;
+}
+
+/* ── Animated grid background ── */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(0, 201, 167, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 201, 167, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Scanline overlay ── */
+.scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 201, 167, 0.015) 2px,
+    rgba(0, 201, 167, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Glowing border utility ── */
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0, 201, 167, 0.3), transparent 40%, transparent 60%, rgba(201, 168, 76, 0.2));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* ── Animated gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #00C9A7, #00e5ff, #C9A84C, #00C9A7);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Pulse ring animation ── */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ── Horizontal scroll for marquee ── */
+@keyframes scroll-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 30s linear infinite;
+}
+
+/* ── Data stream animation ── */
+@keyframes data-stream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ── Glitch effect ── */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 90% 0); transform: translateX(0); }
+  20% { clip-path: inset(30% 0 50% 0); transform: translateX(-4px); }
+  40% { clip-path: inset(60% 0 10% 0); transform: translateX(4px); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translateX(-2px); }
+  80% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
+}
+
+/* ── Typing cursor ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor::after {
+  content: "▌";
+  color: #00C9A7;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0E1A;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 201, 167, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 201, 167, 0.5);
+}
+
+/* ── Smooth card hover ── */
+.cyber-card {
+  @apply relative overflow-hidden rounded-lg border border-white/[0.06] bg-navy-mid/60 backdrop-blur-xl transition-all duration-500;
+}
+.cyber-card:hover {
+  @apply border-teal/20 shadow-glow;
+  transform: translateY(-4px);
+}
+
+/* ── Gradient divider ── */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 201, 167, 0.4), rgba(201, 168, 76, 0.2), transparent);
+}
+
+/* ── Counter animation helper ── */
+.stat-number {
+  font-variant-numeric: tabular-nums;
 }

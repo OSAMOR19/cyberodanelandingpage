@@ -1,37 +1,51 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
 import { footer, site } from "@/lib/content";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.08] bg-navy-mid py-16">
+    <footer className="relative overflow-hidden border-t border-white/[0.04] bg-navy-dark py-16">
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute left-1/4 top-0 h-64 w-64 bg-teal/[0.03] blur-[100px] rounded-full" aria-hidden />
+
       <Container>
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+          {/* Brand column */}
           <div className="lg:col-span-1">
-            <Link href="#hero" className="font-display text-xl font-bold text-mist">
-              CYBER <span className="text-teal">ODANE</span>
+            <Link href="#hero" className="inline-block font-display text-2xl font-bold text-mist">
+              CYBER <span className="gradient-text">ODANE</span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-mist-dim">{footer.blurb}</p>
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-mist-muted">
-              {footer.affiliations.map((a, i) => (
-                <span key={a} className="flex items-center gap-2">
-                  {i > 0 ? <span aria-hidden>·</span> : null}
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-mist-dim">{footer.blurb}</p>
+
+            {/* Affiliations */}
+            <div className="mt-6 flex flex-wrap gap-2">
+              {footer.affiliations.map((a) => (
+                <span
+                  key={a}
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-xs font-medium text-mist-muted transition hover:border-teal/15 hover:text-mist-dim"
+                >
                   {a}
                 </span>
               ))}
             </div>
           </div>
+
+          {/* Link columns */}
           {footer.cols.map((col) => (
             <div key={col.title}>
-              <h3 className="font-sans text-sm font-semibold text-mist">{col.title}</h3>
-              <ul className="mt-4 space-y-2">
+              <h3 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-teal">{col.title}</h3>
+              <ul className="mt-5 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-sm text-mist-muted transition hover:text-teal"
+                      className="group inline-flex items-center gap-2 text-sm text-mist-muted transition hover:text-mist"
                     >
+                      <span className="h-1 w-1 rounded-full bg-mist-muted/30 transition group-hover:bg-teal" />
                       {l.label}
                     </Link>
                   </li>
@@ -40,9 +54,14 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-14 flex flex-col gap-2 border-t border-white/[0.08] pt-8 text-sm text-mist-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>{footer.copyright}</p>
-          <p className="text-xs">{footer.legal}</p>
+
+        {/* Bottom bar */}
+        <div className="mt-16">
+          <div className="gradient-divider mb-8" />
+          <div className="flex flex-col gap-3 text-sm text-mist-muted sm:flex-row sm:items-center sm:justify-between">
+            <p className="font-mono text-xs">{footer.copyright}</p>
+            <p className="text-xs opacity-60">{footer.legal}</p>
+          </div>
         </div>
       </Container>
     </footer>
