@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
@@ -38,6 +39,24 @@ export function HowItWorks() {
               {howItWorks.cta.label}
               <IconArrowRight className="h-4 w-4" />
             </Link>
+
+            {/* Partnership workshop image */}
+            <div className="mt-10 relative overflow-hidden rounded-2xl border border-line">
+              <Image
+                src="/images/partnership-workshop.png"
+                alt="Cyberodane collaborative workshop reviewing cybersecurity framework blueprints"
+                width={640}
+                height={400}
+                className="w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <span className="inline-flex items-center gap-2 rounded-full bg-surface/80 border border-accent/20 px-3 py-1.5 backdrop-blur-md">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                  <span className="font-mono text-[0.65rem] uppercase tracking-wider text-accent">Collaborative framework</span>
+                </span>
+              </div>
+            </div>
           </Reveal>
 
           <RevealStagger className="relative">

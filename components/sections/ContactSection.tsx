@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -73,7 +74,19 @@ export function ContactSection() {
               })}
             </ul>
 
-            <div className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface-card p-5">
+            {/* Office image */}
+            <div className="mt-8 relative overflow-hidden rounded-2xl border border-line">
+              <Image
+                src="/images/office-reception.png"
+                alt="Modern Cyberodane office reception with professional welcoming environment"
+                width={600}
+                height={340}
+                className="w-full h-[200px] sm:h-[240px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
+            </div>
+
+            <div className="mt-6 overflow-hidden rounded-2xl border border-line bg-surface-card p-5">
               {(() => {
                 const i = contact.commitment.indexOf(":");
                 if (i === -1) return <p className="text-sm text-ink-secondary">{contact.commitment}</p>;

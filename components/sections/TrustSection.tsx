@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealStagger } from "@/components/ui/Reveal";
 import { IconBank, IconBolt, IconHeart, IconBuilding, IconGraduation, IconCpu, IconScale, IconTruck, IconSignal } from "@/components/icons/Icons";
@@ -23,10 +25,29 @@ export function TrustSection() {
       <div className="section-divider absolute top-0 left-0 right-0" />
 
       <Container className="relative">
+        {/* Conference / Summit banner image */}
         <Reveal>
-          <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
-            {trust.sectorsTitle}
-          </h2>
+          <div className="relative overflow-hidden rounded-2xl border border-line mb-12">
+            <Image
+              src="/images/conference-summit.png"
+              alt="Cyberodane presenting at a global cybersecurity framework summit"
+              width={1200}
+              height={400}
+              className="w-full h-[240px] sm:h-[320px] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-surface/70 via-surface/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 top-0 flex items-end p-6 sm:p-8">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full bg-surface/80 border border-accent/20 px-3 py-1.5 backdrop-blur-md mb-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                  <span className="font-mono text-[0.65rem] uppercase tracking-wider text-accent">Trusted across sectors</span>
+                </span>
+                <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
+                  {trust.sectorsTitle}
+                </h2>
+              </div>
+            </div>
+          </div>
         </Reveal>
 
         <RevealStagger className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

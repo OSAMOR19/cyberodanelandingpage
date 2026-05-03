@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
@@ -13,9 +14,18 @@ export function CTASection() {
       <Container>
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-line-accent">
-            {/* Multi-layer gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.08] via-surface to-surface" />
-            <div className="absolute inset-0 bg-gradient-to-tl from-gold/[0.04] via-transparent to-accent/[0.06]" />
+            {/* Background image */}
+            <div className="absolute inset-0">
+              <Image
+                src="/images/partnership-handshake.png"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/90 to-surface/70" />
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-gold/[0.04]" />
+            </div>
             <div className="absolute inset-0 cyber-grid opacity-20" aria-hidden />
 
             {/* Ambient orbs */}

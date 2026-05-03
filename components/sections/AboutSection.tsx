@@ -101,6 +101,26 @@ export function AboutSection() {
               ))}
             </Reveal>
 
+            {/* Analyst workspace image */}
+            <Reveal className="mt-6" delay={0.12}>
+              <div className="relative overflow-hidden rounded-2xl border border-line">
+                <Image
+                  src="/images/analyst-workspace.png"
+                  alt="Cybersecurity analyst workstation showing SIEM and vulnerability scanning dashboards"
+                  width={640}
+                  height={360}
+                  className="w-full h-[200px] sm:h-[240px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-surface/80 border border-accent/20 px-3 py-1 backdrop-blur-md">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                    <span className="font-mono text-[0.6rem] uppercase tracking-wider text-accent">SOC operations</span>
+                  </span>
+                </div>
+              </div>
+            </Reveal>
+
             <RevealStagger className="mt-8 flex flex-col gap-3">
               {about.affiliations.map((a) => (
                 <div
